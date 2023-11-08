@@ -3,12 +3,12 @@ package com.dev.localizacao.domain.repository;
 import com.dev.localizacao.domain.entity.Cidade;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface CidadeRepository extends JpaRepository<Cidade, Long> {
+public interface CidadeRepository extends JpaRepository<Cidade, Long>, JpaSpecificationExecutor<Cidade> {
 
     //Busca pelo nome correto, o Sort adiciona uma ordenação (habitantes)
     List<Cidade> findByNome(String nome, Sort sort);

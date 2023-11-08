@@ -2,13 +2,13 @@ package com.dev.localizacao.service;
 
 import com.dev.localizacao.domain.entity.Cidade;
 import com.dev.localizacao.domain.repository.CidadeRepository;
+import com.dev.localizacao.domain.repository.specs.CidadeSpecification;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,5 +55,10 @@ public class CidadeService {
 
         Example<Cidade> example = Example.of(cidade, matcher);
         return cidadeRepository.findAll(example);
+    }
+
+    public void listarCidadesByNomeSpecification() {
+        Specification<Cidade> specification = CidadeSpecification.nomeEqual("Gama");
+        cidadeRepository.findAll(specification).forEach(System.out::println);
     }
 }
