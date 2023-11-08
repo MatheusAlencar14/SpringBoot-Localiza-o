@@ -1,6 +1,7 @@
 package com.dev.localizacao.domain.repository;
 
 import com.dev.localizacao.domain.entity.Cidade;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,12 +10,12 @@ import java.util.List;
 
 public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 
-    //Busca pelo nome correto
-    List<Cidade> findByNome(String nome);
+    //Busca pelo nome correto, o Sort adiciona uma ordenação (habitantes)
+    List<Cidade> findByNome(String nome, Sort sort);
 
     //Para tornar a Query case sensitive: linha abaixo
     @Query(" select c from Cidade c where upper(c.nome) like upper(?1) ")
-    List<Cidade> findByNomeLike(String nome);
+    List<Cidade> findByNomeLike(String nome, Sort sort);
 
     //Busca pelo nome que começa por esse pedaço do nome
     // (select * from tb_cidade where nome like 'Sa%')
