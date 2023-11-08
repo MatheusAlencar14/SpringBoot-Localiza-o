@@ -1,5 +1,6 @@
 package com.dev.localizacao;
 
+import com.dev.localizacao.domain.entity.Cidade;
 import com.dev.localizacao.domain.repository.CidadeRepository;
 import com.dev.localizacao.service.CidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,8 @@ public class LocalizacaoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//listarCidadesPorNome();
-		cidadeService.listarCidadesPorHabitantes();
-		cidadeService.listarCidadesPorNome();
+		var cidade = new Cidade(null, "gama", null);
+		cidadeService.filtroDinâmico(cidade).forEach(System.out::println);
 	}
 
 	public static void main(String[] args) {

@@ -6,8 +6,12 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Data
@@ -40,5 +44,16 @@ public class CidadeService {
 
     public void listarCidades() {
         cidadeRepository.findAll(Sort.by("habitantes"));
+    }
+
+    //Usando o Example para queries dinâmicas, onde a pesquisa pode ser tanto com nome,
+    // quanto com habitantes ou mesmo com os dois campos.
+    public List<Cidade> filtroDinâmico(Cidade cidade) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase(); //para ignorar letras maiusculas e minusculas
+
+        Example<Cidade> example = Example.of(cidade, matcher);
+        return cidadeRepository.findAll(example);
     }
 }
