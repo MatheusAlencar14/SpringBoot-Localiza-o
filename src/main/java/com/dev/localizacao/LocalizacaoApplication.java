@@ -1,8 +1,6 @@
 package com.dev.localizacao;
 
-import com.dev.localizacao.domain.entity.Cidade;
 import com.dev.localizacao.domain.repository.CidadeRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,14 +12,22 @@ public class LocalizacaoApplication implements CommandLineRunner {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 
+
 	@Override
 	public void run(String... args) throws Exception {
-		listarCidades();
+		listarCidadesPorNome();
+		listarCidadesPorHabitantes();
 	}
 
+	void listarCidadesPorNome() {
+		cidadeRepository.findByNome("Asa Sul").forEach(System.out::println);
+		cidadeRepository.findByNomeStartingWith("Cei").forEach(System.out::println);
+		cidadeRepository.findByNomeEndingWith("dia").forEach(System.out::println);
+		cidadeRepository.findByNomeContaining("ua").forEach(System.out::println);
+	}
 
-	public void listarCidades() {
-		cidadeRepository.findAll().forEach(System.out::println);
+	void listarCidadesPorHabitantes() {
+		cidadeRepository.findByHabitantes(532L).forEach(System.out::println);
 	}
 
 	public static void main(String[] args) {
