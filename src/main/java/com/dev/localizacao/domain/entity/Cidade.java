@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class Cidade {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_cidade")
     private Long id;
 
