@@ -10,8 +10,11 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+
+import static com.dev.localizacao.domain.repository.specs.CidadeSpecification.*;
 
 @Service
 @Data
@@ -61,4 +64,24 @@ public class CidadeService {
         Specification<Cidade> specification = CidadeSpecification.nomeEqual("Gama");
         cidadeRepository.findAll(specification).forEach(System.out::println);
     }
+
+    public void listarCidadesSpecsFiltroDinamico(Cidade filtro) {
+        Specification<Cidade> specs = Specification.where((root, query, cB) -> cB.conjunction());
+        //select * from cidade where 1 = 1
+
+        if(filtro.getId()!= null) {
+            specs = specs.and(idEqual(filtro.getId()));
+        }
+
+        if(StringUtils.hasText(filtro.getNome())) {
+            specs = specs.and(nomeLike(filtro.getNome()));
+        }
+
+        if(filtro.getHabitantes() != null) {
+            specs = specs.and(habitantesGreaterThan(filtro.getHabitantes()));
+        }
+        cidadeRepository.findAll(specs).forEach(System.out::println);
+    }
 }
+
+//Para saber mais sobre Specification estudar o Criteria API
