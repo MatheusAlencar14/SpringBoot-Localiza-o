@@ -49,6 +49,14 @@ public class CidadeService {
         cidadeRepository.findAll(Sort.by("habitantes"));
     }
 
+    public void listarCidadesPorNomeSQL() {
+        cidadeRepository
+                .findByNomeSqlNativo("Gama")
+                .stream()
+                .map(cP -> new Cidade(cP.getId(), cP.getNome(), null))
+                .forEach(System.out::println);
+    }
+
     //Usando o Example para queries dinâmicas, onde a pesquisa pode ser tanto com nome,
     // quanto com habitantes ou mesmo com os dois campos.
     public List<Cidade> filtroDinâmico(Cidade cidade) {
